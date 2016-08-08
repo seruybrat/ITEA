@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>hw</title>
+</head>
+<body>
+	<style>
+		li {
+			font-size: 30px;
+		}
+		.button__wrap, .list {
+			text-align: center;
+		}
+		.input {
+			display: inline-block;
+		}
+		.active {
+			color: red;
+		}
+	</style>
+	<ul class="list" id="list">
+		<li class="item">green</li>
+		<li class="item">red</li>
+		<li class="item">black</li>
+		<li class="item">white</li>
+		<li class="item">yellow</li>
+	</ul>
+	<div class="button__wrap">
+		<input class="btn" type="button" value="Выбрать первый элемент" >
+		<input class="btn" type="button" value="Выбрать последний элемент" >
+		<input class="btn" type="button" value="Выбрать предыдущий элемент">
+		<input class="btn" type="button" value="Выбрать следующий элемент" >
+		<input class="btn" type="button" value="Добавить элемент" >
+		<input class="btn" type="button" value="Удалить элемент" >
+		<input class="btn" type="button" value="Добавть в начало" >
+	</div>
+	<script>
+
+;(function(){
+	var list = document.getElementById("list"),
+			item = list.getElementsByClassName("item"),
+    	btn = document.getElementsByClassName("btn");
+    
+    	btn[0].addEventListener("click", first);
+    	btn[1].addEventListener("click", last);
+    	btn[2].addEventListener("click", prev);
+    	btn[3].addEventListener("click", next);
+    	btn[4].addEventListener("click", add);
+    	btn[5].addEventListener("click", del);
+    	btn[6].addEventListener("click", addFirst);
+
+		function first() {
+			removeClass();
+			list.firstElementChild.classList.add("active");
+		}
+		function last() {
+			removeClass();
+			list.lastElementChild.classList.add("active");
+		}
+		function prev() {
+			findActive();
+			removeClass();
+			if(active == null) {
+				alert("Выберите пункт");
+			} else if (j == 0) {
+				item[item.length-1].classList.add("active");
+			} else {
+				item[j].previousElementSibling.classList.add("active");
+			}
+		}
+		function next() {
+			findActive();
+			removeClass();
+			if(active == null) {
+				alert("Выберите пункт");
+			} else if (j == item.length-1) {
+				item[0].classList.add("active");
+			} else {
+				item[j].nextElementSibling.classList.add("active");
+			}
+		}
+		function add() {
+		  list.appendChild(creatNode());
+		}
+		function del() {
+			var choose = document.querySelector(".active");
+			if (choose == null) {
+				alert("Выберите пункт");
+			} else {
+				choose.parentNode.removeChild(choose);
+			}
+		}
+		function addFirst() {
+			list.insertBefore(creatNode(), list.firstChild);
+		}  
+		function creatNode() {
+			var newItem = document.createElement("LI"),
+      		textnode = document.createTextNode("New");      
+			newItem.className = "item";		    
+		  newItem.appendChild(textnode);
+      return newItem;
+		}
+
+		function findActive() {
+			for (var i = item.length-1; i >= 0; i--) {
+				if (item[i].classList.contains("active")) {
+					j = i;
+					break;
+				}
+			}
+		}
+
+		function removeClass() {
+			active = document.querySelector(".active");
+			if(active !== null){
+				active.classList.remove("active");
+			} 
+		} 
+
+})();
+
+	</script>
+</body>
+</html>
